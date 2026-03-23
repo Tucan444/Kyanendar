@@ -1,0 +1,30 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Kyanendar"
+             x:Class="Kyanendar.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="Background">#262626</Color>
+            <Color x:Key="Title">#FFE7E7E7</Color> 
+            <Color x:Key="ButtonColor">#FF7F6391</Color> 
+            <Color x:Key="ButtonColor2">#FF4A315A</Color>
+            <Color x:Key="ClickableText">#33eb73</Color> 
+            <Color x:Key="FrameBG">#FF121212</Color>      
+            <Color x:Key="FrameBorder">#FF3A3A3A</Color>          
+
+            <Style x:Key="LinkButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource ClickableText}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Kyanendar.MVVM.ViewModels"
+    xmlns:models="clr-namespace:Kyanendar.MVVM.Models"
+    x:Class="Kyanendar.MVVM.Views.MenuView"
+    x:DataType="viewmodels:MenuViewModel"
+    BackgroundColor="{StaticResource Background}">
+
+  <Grid RowDefinitions="Auto,*,Auto"
+        Padding="20"
+        RowSpacing="20">
+
+    <!-- Title -->
+    <Label Grid.Row="0"
+           Text="Kyanendar"
+           SemanticProperties.HeadingLevel="Level1"
+           FontSize="32"
+           TextColor="{StaticResource Title}"
+           HorizontalOptions="Center" />
+
+    <!-- Kyanendars List -->
+    <CollectionView Grid.Row="1"
+                    ItemsSource="{Binding Kyanendars}">
+      <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="models:Kyanendar">
+          <Frame Margin="0,5"
+                 Padding="15"
+                 BackgroundColor="{StaticResource FrameBG}"
+                 BorderColor="{StaticResource FrameBorder}"
+                 CornerRadius="8">
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+              <Frame Margin="1" BackgroundColor="{StaticResource FrameBG}">
+                <Frame.GestureRecognizers>
+                  <TapGestureRecognizer
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MenuViewModel}}, Path=OpenKyanendarCommand}"
+                    CommandParameter="{Binding}" />
+                </Frame.GestureRecognizers>
+
+                <Label
+                  Text="{Binding Name}"
+                  Style="{StaticResource LinkButton}" />
+              </Frame>
+              
+
+              <Button Grid.Column="1"
+                      Text="Download"
+                      TextColor="#FF7DFDBF"
+                      BackgroundColor="#FF089F2E"
+                      FontAttributes="Bold"
+                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MenuViewModel}}, Path=DownloadCommand}"
+                      CommandParameter="{Binding}" />
+
+              <Button Grid.Column="2"
+                      Text="Delete"
+                      TextColor="#FFF7CEDD"
+                      BackgroundColor="#FFD31373"
+                      FontAttributes="Bold"
+                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MenuViewModel}}, Path=DeleteCommand}"
+                      CommandParameter="{Binding}" />
+            </Grid>
+          </Frame>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+
+      <CollectionView.EmptyView>
+        <VerticalStackLayout HorizontalOptions="Center"
+                             VerticalOptions="Center">
+          <Label Text="No Kyanendars yet"
+                 FontSize="18"
+                 TextColor="{StaticResource Title}"
+                 HorizontalOptions="Center" />
+          <Label Text="Create one or import existing"
+                 FontSize="14"
+                 TextColor="{StaticResource Title}"
+                 HorizontalOptions="Center" />
+        </VerticalStackLayout>
+      </CollectionView.EmptyView>
+    </CollectionView>
+
+    <!-- Bottom Buttons -->
+    <VerticalStackLayout Grid.Row="2"
+                         Spacing="10"
+                         HorizontalOptions="Center">
+      <HorizontalStackLayout Spacing="10">
+        <Button Text="Add Blank Kyanendar"
+                Command="{Binding AddBlankCommand}"
+                BackgroundColor="{StaticResource ButtonColor}"
+                TextColor="White" />
+        <Button Text="Import Kyanendar"
+                Command="{Binding ImportCommand}"
+                BackgroundColor="{StaticResource ButtonColor}"
+                TextColor="White" />
+      </HorizontalStackLayout>
+      <!-- <Button Text="Open App Folder"
+              Command="{Binding ShowPathsCommand}"
+              BackgroundColor="{StaticResource ButtonColor}"
+              TextColor="White" /> -->
+    </VerticalStackLayout>
+  </Grid>
+</ContentPage>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Kyanendar.MVVM.ViewModels"
+             xmlns:models="clr-namespace:Kyanendar.MVVM.Models"
+             x:Class="Kyanendar.MVVM.Views.KyanendarView"
+             x:DataType="viewmodels:KyanendarViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="10">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+            <SearchBar Grid.Column="0" 
+                      Placeholder="Search in kyans..."
+                      Text="{Binding SearchText}"
+                      BackgroundColor="{StaticResource FrameBG}"/>
+            <Button Grid.Column="1"
+                    Text="{Binding NewestFirstText}"
+                    Command="{Binding ToggleSortCommand}"
+                    BackgroundColor="{StaticResource ButtonColor}"
+                    TextColor="White"
+                    Margin="5,0,0,0"/>
+        </Grid>
+
+        <CollectionView ItemsSource="{Binding Kyans}" Grid.Row="1">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Kyan">
+                    <Frame Margin="0,5" Padding="6" 
+                        BorderColor="{StaticResource FrameBorder}" BackgroundColor="{StaticResource FrameBG}">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <!-- Time -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="4" Margin="10">   
+                                <Label Text="{Binding TimeString}" FontAttributes="Bold" FontSize="16"/>
+                                <HorizontalStackLayout Spacing="2" BindableLayout.ItemsSource="{Binding ColorSegments}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <BoxView HeightRequest="12"
+                                                    WidthRequest="12"
+                                                    CornerRadius="0"
+                                                    Color="{Binding .}" />
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            
+                            <!-- Weeks -->
+                            <Grid Grid.Column="1" 
+                                  ColumnDefinitions="*,*,*" 
+                                  ColumnSpacing="10">
+
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="Week 1"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Frame Padding="0" BackgroundColor="Transparent" BorderColor="Transparent">
+                                        <Label Text="{Binding Week1.Title}"
+                                               FontSize="16"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:KyanendarViewModel}}, Path=OpenWeekCommand}"
+                                                CommandParameter="{Binding Week1}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </VerticalStackLayout>
+                                
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Week 2"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Frame Padding="0" BackgroundColor="Transparent" BorderColor="Transparent">
+                                        <Label Text="{Binding Week2.Title}"
+                                               FontSize="16"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:KyanendarViewModel}}, Path=OpenWeekCommand}"
+                                                CommandParameter="{Binding Week2}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </VerticalStackLayout>
+                                
+                                <VerticalStackLayout Grid.Column="2">
+                                    <Label Text="Week 3"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Frame Padding="0" BackgroundColor="Transparent" BorderColor="Transparent">
+                                        <Label Text="{Binding Week3.Title}"
+                                               FontSize="16"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:KyanendarViewModel}}, Path=OpenWeekCommand}"
+                                                CommandParameter="{Binding Week3}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" 
+                                   VerticalOptions="Center">
+                    <Label Text="No Kyans yet"
+                           FontSize="18"
+                           TextColor="Gray"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <HorizontalStackLayout Spacing="10" Grid.Row="2" Margin="0,10"
+            HorizontalOptions="Center" VerticalOptions="Center">
+            <Button Text="Add Kyan" 
+                    Command="{Binding AddKyanCommand}"
+                    BackgroundColor="{StaticResource ButtonColor}"
+                    TextColor="White" />
+            <Button Text="Remove Kyan" 
+                    Command="{Binding RemoveKyanCommand}"
+                    BackgroundColor="{StaticResource ButtonColor}"
+                    TextColor="White" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
